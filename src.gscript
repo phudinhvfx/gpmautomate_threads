@@ -2,33 +2,476 @@
   "$type": "GPMAutomateEditor.Models.Editor, GPMAutomateEditor.Models",
   "before_init": {
     "$type": "GPMAutomateEditor.Models.NormalBlockNode, GPMAutomateEditor.Models",
-    "nodes": [],
-    "expanded": false,
+    "nodes": [
+      {
+        "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+        "type": 1,
+        "element_xpath": null,
+        "output_variable_name": "commentsPath",
+        "delay": "0,0",
+        "continue_on_error": false,
+        "id": "b0f31077-9008-424f-8542-984c9a856a46",
+        "display_text": null,
+        "raw_input": "[{\"Key\":\"VALUE\",\"Value\":\"$inputExcel[B]\"},{\"Key\":\"ALLOW_USER_INPUT\",\"Value\":\"False\"},{\"Key\":\"USER_INPUT_TYPE\",\"Value\":\"Text\"},{\"Key\":\"COMBOBOX_DATA\",\"Value\":\"\"},{\"Key\":\"INPUT_REQUIRED\",\"Value\":\"False\"}]",
+        "comment": "bind comment path from Excel column B"
+      },
+      {
+        "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+        "type": 1,
+        "element_xpath": null,
+        "output_variable_name": "sendComment",
+        "delay": "0,0",
+        "continue_on_error": false,
+        "id": "a0d2e970-d43b-4b22-82a6-1f3dc4ebb0a3",
+        "display_text": null,
+        "raw_input": "[{\"Key\":\"VALUE\",\"Value\":\"$inputExcel[C]\"},{\"Key\":\"ALLOW_USER_INPUT\",\"Value\":\"False\"},{\"Key\":\"USER_INPUT_TYPE\",\"Value\":\"Text\"},{\"Key\":\"COMBOBOX_DATA\",\"Value\":\"\"},{\"Key\":\"INPUT_REQUIRED\",\"Value\":\"False\"}]",
+        "comment": "bind send decision from Excel column C"
+      }
+    ],
+    "expanded": true,
     "continue_on_error": false,
     "id": "d27b4171-da58-44a4-8fc3-6a68f5428149",
     "display_text": null,
     "raw_input": null,
-    "comment": "Before browser opened"
+    "comment": "Excel bindings for flow_2"
   },
   "main_logic": {
     "$type": "GPMAutomateEditor.Models.NormalBlockNode, GPMAutomateEditor.Models",
     "nodes": [
       {
+        "$type": "GPMAutomateEditor.Models.NormalBlockNode, GPMAutomateEditor.Models",
+        "nodes": [],
+        "expanded": true,
+        "continue_on_error": false,
+        "id": "f55d6a53-8a6b-4950-8b09-20a58e8a4f67",
+        "display_text": "Normal block",
+        "raw_input": null,
+        "comment": "GHI CHÚ MAIN WORKFLOW\n- Thao tác chính: mở Threads bằng flow_0; rút số lượt chạy cho flow_1/flow_2/flow_3; chọn ngẫu nhiên flow còn lượt để chạy; gọi lại flow_0 nếu flow lỗi; giữ trình duyệt mở ở cuối.\n- Sửa số lượt chạy từng flow: Main block #3 `draw workflow quota` → node #1, #2, #3 (`draw flow_1/2/3 quota`), chỉnh MIN/MAX.\n- Sửa cách chọn flow mỗi lượt: Main block #4 `pick workflow from remaining quota` → node #2 `pick remaining slot` (mặc định MAX=$remainingTotal).\n- Sửa thời gian giữ trình duyệt: Main node #5 `keep browser open...`, chỉnh MIN/MAX.\n- Dữ liệu comment: Before browser opened → node #1 lấy cột B (file comment), node #2 lấy cột C (điền True để flow_2 được phép comment).\n- Cách đếm: dùng số thứ tự node/block hiển thị trong GPM Automate, tính cả block ghi chú này."
+      },
+      {
         "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
         "type": 70,
         "element_xpath": null,
         "output_variable_name": null,
-        "delay": "0,0",
+        "delay": "1000,1500",
         "continue_on_error": false,
-        "id": "049d53bb-fca7-4383-b699-20a53561b42e",
+        "id": "10a9a814-5a83-4edf-8ac5-7f9b64b5d908",
         "display_text": "Call workflow",
         "raw_input": "[{\"Key\":\"REF_FILE\",\"Value\":\"flow_0\"}]",
-        "comment": null
+        "comment": "open Threads at startup"
+      },
+      {
+        "$type": "GPMAutomateEditor.Models.NormalBlockNode, GPMAutomateEditor.Models",
+        "nodes": [
+          {
+            "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+            "type": 11,
+            "element_xpath": null,
+            "output_variable_name": "remainingFlow1",
+            "delay": "0,0",
+            "continue_on_error": false,
+            "id": "6ff59c1f-c9e2-4acb-9487-51c640da0a72",
+            "display_text": null,
+            "raw_input": "[{\"Key\":\"MIN\",\"Value\":\"1\"},{\"Key\":\"MAX\",\"Value\":\"3\"}]",
+            "comment": "draw flow_1 quota"
+          },
+          {
+            "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+            "type": 11,
+            "element_xpath": null,
+            "output_variable_name": "remainingFlow2",
+            "delay": "0,0",
+            "continue_on_error": false,
+            "id": "5c1f878b-d427-41b6-9fee-0c8eb0d89555",
+            "display_text": null,
+            "raw_input": "[{\"Key\":\"MIN\",\"Value\":\"1\"},{\"Key\":\"MAX\",\"Value\":\"3\"}]",
+            "comment": "draw flow_2 quota"
+          },
+          {
+            "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+            "type": 11,
+            "element_xpath": null,
+            "output_variable_name": "remainingFlow3",
+            "delay": "0,0",
+            "continue_on_error": false,
+            "id": "3a76b042-e67a-456a-a7c1-7f6abf9389ca",
+            "display_text": null,
+            "raw_input": "[{\"Key\":\"MIN\",\"Value\":\"1\"},{\"Key\":\"MAX\",\"Value\":\"3\"}]",
+            "comment": "draw flow_3 quota"
+          },
+          {
+            "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+            "type": 12,
+            "element_xpath": null,
+            "output_variable_name": "totalFlows",
+            "delay": "0,0",
+            "continue_on_error": false,
+            "id": "c0712b83-7ecb-4206-a792-7c5ea7ea8817",
+            "display_text": null,
+            "raw_input": "[{\"Key\":\"MATH_EXPRESSION\",\"Value\":\"$remainingFlow1+$remainingFlow2+$remainingFlow3\"}]",
+            "comment": "sum workflow quota"
+          }
+        ],
+        "expanded": true,
+        "continue_on_error": false,
+        "id": "462c0e50-b052-4441-8077-1b098de1cf46",
+        "display_text": "Normal block",
+        "raw_input": null,
+        "comment": "draw workflow quota"
+      },
+      {
+        "$type": "GPMAutomateEditor.Models.ForBlockNode, GPMAutomateEditor.Models",
+        "start": "0",
+        "end": "$totalFlows",
+        "step": "1",
+        "nodes": [
+          {
+            "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+            "type": 12,
+            "element_xpath": null,
+            "output_variable_name": "remainingTotal",
+            "delay": "0,0",
+            "continue_on_error": false,
+            "id": "9c43639a-33b7-4c8a-bd37-e3e3f8e5aa96",
+            "display_text": null,
+            "raw_input": "[{\"Key\":\"MATH_EXPRESSION\",\"Value\":\"$remainingFlow1+$remainingFlow2+$remainingFlow3\"}]",
+            "comment": "sum remaining quota"
+          },
+          {
+            "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+            "type": 11,
+            "element_xpath": null,
+            "output_variable_name": "pickSlot",
+            "delay": "0,0",
+            "continue_on_error": false,
+            "id": "e23f1d91-4aa7-4a5f-8b32-3447d8b364e8",
+            "display_text": null,
+            "raw_input": "[{\"Key\":\"MIN\",\"Value\":\"1\"},{\"Key\":\"MAX\",\"Value\":\"$remainingTotal\"}]",
+            "comment": "pick remaining slot"
+          },
+          {
+            "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+            "type": 12,
+            "element_xpath": null,
+            "output_variable_name": "remainingFlow1And2",
+            "delay": "0,0",
+            "continue_on_error": false,
+            "id": "a7ef5b3c-57f6-4f7e-9ba6-3dde73bb54fc",
+            "display_text": null,
+            "raw_input": "[{\"Key\":\"MATH_EXPRESSION\",\"Value\":\"$remainingFlow1+$remainingFlow2\"}]",
+            "comment": "sum flow_1 and flow_2"
+          },
+          {
+            "$type": "GPMAutomateEditor.Models.IfBlockNode, GPMAutomateEditor.Models",
+            "condition": "$pickSlot <= $remainingFlow1",
+            "nodes": [
+              {
+                "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                "type": 1,
+                "element_xpath": null,
+                "output_variable_name": "flowRunStatus",
+                "delay": "0,0",
+                "continue_on_error": false,
+                "id": "aa860e2f-7023-40da-b34f-4bf70def9df8",
+                "display_text": null,
+                "raw_input": "[{\"Key\":\"VALUE\",\"Value\":\"RUNNING\"},{\"Key\":\"ALLOW_USER_INPUT\",\"Value\":\"False\"},{\"Key\":\"USER_INPUT_TYPE\",\"Value\":\"Text\"},{\"Key\":\"COMBOBOX_DATA\",\"Value\":\"\"},{\"Key\":\"INPUT_REQUIRED\",\"Value\":\"False\"}]",
+                "comment": "mark flow_1 running"
+              },
+              {
+                "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                "type": 68,
+                "element_xpath": null,
+                "output_variable_name": null,
+                "delay": "0,0",
+                "continue_on_error": false,
+                "id": "f682f526-e52b-44ee-9f94-963440a0c94d",
+                "display_text": null,
+                "raw_input": "[{\"Key\":\"FILE_OR_CODE\",\"Value\":\"window.__gpmFlowRunStatus = \\\"RUNNING\\\";\"}]",
+                "comment": "publish flow_1 running"
+              },
+              {
+                "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                "type": 70,
+                "element_xpath": null,
+                "output_variable_name": null,
+                "delay": "1000,3000",
+                "continue_on_error": true,
+                "id": "db0b7c80-f0e7-4380-8d19-82d7560dbcd2",
+                "display_text": "Call workflow",
+                "raw_input": "[{\"Key\":\"REF_FILE\",\"Value\":\"flow_1\"}]",
+                "comment": "call flow_1, scroll+like"
+              },
+              {
+                "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                "type": 68,
+                "element_xpath": null,
+                "output_variable_name": "flowRunStatus",
+                "delay": "0,0",
+                "continue_on_error": true,
+                "id": "219eff81-05da-4142-93c1-3cae2c42fac3",
+                "display_text": null,
+                "raw_input": "[{\"Key\":\"FILE_OR_CODE\",\"Value\":\"return window.__gpmFlowRunStatus || \\\"RUNNING\\\";\"}]",
+                "comment": "read flow_1 result"
+              },
+              {
+                "$type": "GPMAutomateEditor.Models.IfBlockNode, GPMAutomateEditor.Models",
+                "condition": "$flowRunStatus != \"OK\"",
+                "nodes": [
+                  {
+                    "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                    "type": 70,
+                    "element_xpath": null,
+                    "output_variable_name": null,
+                    "delay": "1000,1500",
+                    "continue_on_error": false,
+                    "id": "20920fae-ede2-457d-9414-098ec5517d43",
+                    "display_text": "Call workflow",
+                    "raw_input": "[{\"Key\":\"REF_FILE\",\"Value\":\"flow_0\"}]",
+                    "comment": "recover Threads after flow_1"
+                  }
+                ],
+                "expanded": true,
+                "continue_on_error": false,
+                "id": "bf289d3d-6275-44df-a283-db55fbff591c",
+                "display_text": "If",
+                "raw_input": "[{\"Key\":\"CONDITION\",\"Value\":\"$flowRunStatus != \\\"OK\\\"\"}]",
+                "comment": "recover if flow_1 failed"
+              },
+              {
+                "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                "type": 3,
+                "element_xpath": null,
+                "output_variable_name": "remainingFlow1",
+                "delay": "0,0",
+                "continue_on_error": false,
+                "id": "3cabfa5e-16fd-472a-a7de-88c35738a546",
+                "display_text": null,
+                "raw_input": "[{\"Key\":\"CURRENT_VAL\",\"Value\":\"$remainingFlow1\"},{\"Key\":\"DESCREASE_BY\",\"Value\":\"1\"}]",
+                "comment": "decrease flow_1 quota"
+              }
+            ],
+            "expanded": true,
+            "continue_on_error": false,
+            "id": "5af77722-8dd0-45a1-ad17-6ec34f3494fe",
+            "display_text": "If",
+            "raw_input": "[{\"Key\":\"CONDITION\",\"Value\":\"$pickSlot <= $remainingFlow1\"}]",
+            "comment": "choose flow_1"
+          },
+          {
+            "$type": "GPMAutomateEditor.Models.ElseIfBlockNode, GPMAutomateEditor.Models",
+            "condition": "$pickSlot <= $remainingFlow1And2",
+            "nodes": [
+              {
+                "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                "type": 1,
+                "element_xpath": null,
+                "output_variable_name": "flowRunStatus",
+                "delay": "0,0",
+                "continue_on_error": false,
+                "id": "6b2797aa-33ab-46bd-a142-134aaefa29ae",
+                "display_text": null,
+                "raw_input": "[{\"Key\":\"VALUE\",\"Value\":\"RUNNING\"},{\"Key\":\"ALLOW_USER_INPUT\",\"Value\":\"False\"},{\"Key\":\"USER_INPUT_TYPE\",\"Value\":\"Text\"},{\"Key\":\"COMBOBOX_DATA\",\"Value\":\"\"},{\"Key\":\"INPUT_REQUIRED\",\"Value\":\"False\"}]",
+                "comment": "mark flow_2 running"
+              },
+              {
+                "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                "type": 68,
+                "element_xpath": null,
+                "output_variable_name": null,
+                "delay": "0,0",
+                "continue_on_error": false,
+                "id": "bb39b8d1-6c3e-4f80-a755-7282518dea74",
+                "display_text": null,
+                "raw_input": "[{\"Key\":\"FILE_OR_CODE\",\"Value\":\"window.__gpmFlowRunStatus = \\\"RUNNING\\\";\"}]",
+                "comment": "publish flow_2 running"
+              },
+              {
+                "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                "type": 70,
+                "element_xpath": null,
+                "output_variable_name": null,
+                "delay": "1000,3000",
+                "continue_on_error": true,
+                "id": "a80f5dde-5cb4-49c0-ac79-7c07c4af70d3",
+                "display_text": "Call workflow",
+                "raw_input": "[{\"Key\":\"REF_FILE\",\"Value\":\"flow_2\"}]",
+                "comment": "call flow_2, scroll+comment"
+              },
+              {
+                "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                "type": 68,
+                "element_xpath": null,
+                "output_variable_name": "flowRunStatus",
+                "delay": "0,0",
+                "continue_on_error": true,
+                "id": "8f378eed-7257-475b-af7e-e30a81b6faf1",
+                "display_text": null,
+                "raw_input": "[{\"Key\":\"FILE_OR_CODE\",\"Value\":\"return window.__gpmFlowRunStatus || \\\"RUNNING\\\";\"}]",
+                "comment": "read flow_2 result"
+              },
+              {
+                "$type": "GPMAutomateEditor.Models.IfBlockNode, GPMAutomateEditor.Models",
+                "condition": "$flowRunStatus != \"OK\"",
+                "nodes": [
+                  {
+                    "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                    "type": 70,
+                    "element_xpath": null,
+                    "output_variable_name": null,
+                    "delay": "1000,1500",
+                    "continue_on_error": false,
+                    "id": "08b81fc8-cf0e-43da-892e-3041b1005e40",
+                    "display_text": "Call workflow",
+                    "raw_input": "[{\"Key\":\"REF_FILE\",\"Value\":\"flow_0\"}]",
+                    "comment": "recover Threads after flow_2"
+                  }
+                ],
+                "expanded": true,
+                "continue_on_error": false,
+                "id": "af96f615-cfc8-448f-896a-ac0f7816441b",
+                "display_text": "If",
+                "raw_input": "[{\"Key\":\"CONDITION\",\"Value\":\"$flowRunStatus != \\\"OK\\\"\"}]",
+                "comment": "recover if flow_2 failed"
+              },
+              {
+                "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                "type": 3,
+                "element_xpath": null,
+                "output_variable_name": "remainingFlow2",
+                "delay": "0,0",
+                "continue_on_error": false,
+                "id": "4df74dd0-6137-4e61-ac10-ca3e0da4e76d",
+                "display_text": null,
+                "raw_input": "[{\"Key\":\"CURRENT_VAL\",\"Value\":\"$remainingFlow2\"},{\"Key\":\"DESCREASE_BY\",\"Value\":\"1\"}]",
+                "comment": "decrease flow_2 quota"
+              }
+            ],
+            "expanded": true,
+            "continue_on_error": false,
+            "id": "18e3d3ec-127e-4475-9d41-d3ed21d17f9d",
+            "display_text": "Else if",
+            "raw_input": "[{\"Key\":\"CONDITION\",\"Value\":\"$pickSlot <= $remainingFlow1And2\"}]",
+            "comment": "choose flow_2"
+          },
+          {
+            "$type": "GPMAutomateEditor.Models.ElseBlockNode, GPMAutomateEditor.Models",
+            "nodes": [
+              {
+                "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                "type": 1,
+                "element_xpath": null,
+                "output_variable_name": "flowRunStatus",
+                "delay": "0,0",
+                "continue_on_error": false,
+                "id": "79b475fd-1441-4d0b-98bf-87c8049372d3",
+                "display_text": null,
+                "raw_input": "[{\"Key\":\"VALUE\",\"Value\":\"RUNNING\"},{\"Key\":\"ALLOW_USER_INPUT\",\"Value\":\"False\"},{\"Key\":\"USER_INPUT_TYPE\",\"Value\":\"Text\"},{\"Key\":\"COMBOBOX_DATA\",\"Value\":\"\"},{\"Key\":\"INPUT_REQUIRED\",\"Value\":\"False\"}]",
+                "comment": "mark flow_3 running"
+              },
+              {
+                "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                "type": 68,
+                "element_xpath": null,
+                "output_variable_name": null,
+                "delay": "0,0",
+                "continue_on_error": false,
+                "id": "9d8f4db0-1da6-46c3-9d13-e5573cde0e76",
+                "display_text": null,
+                "raw_input": "[{\"Key\":\"FILE_OR_CODE\",\"Value\":\"window.__gpmFlowRunStatus = \\\"RUNNING\\\";\"}]",
+                "comment": "publish flow_3 running"
+              },
+              {
+                "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                "type": 70,
+                "element_xpath": null,
+                "output_variable_name": null,
+                "delay": "1000,3000",
+                "continue_on_error": true,
+                "id": "bfa6ac61-8a4a-4837-9765-05e875a9de9e",
+                "display_text": "Call workflow",
+                "raw_input": "[{\"Key\":\"REF_FILE\",\"Value\":\"flow_3\"}]",
+                "comment": "call flow_3, scroll+đọc comment"
+              },
+              {
+                "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                "type": 68,
+                "element_xpath": null,
+                "output_variable_name": "flowRunStatus",
+                "delay": "0,0",
+                "continue_on_error": true,
+                "id": "4f9c4a8d-e430-4c2a-9c01-e9082a9549a7",
+                "display_text": null,
+                "raw_input": "[{\"Key\":\"FILE_OR_CODE\",\"Value\":\"return window.__gpmFlowRunStatus || \\\"RUNNING\\\";\"}]",
+                "comment": "read flow_3 result"
+              },
+              {
+                "$type": "GPMAutomateEditor.Models.IfBlockNode, GPMAutomateEditor.Models",
+                "condition": "$flowRunStatus != \"OK\"",
+                "nodes": [
+                  {
+                    "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                    "type": 70,
+                    "element_xpath": null,
+                    "output_variable_name": null,
+                    "delay": "1000,1500",
+                    "continue_on_error": false,
+                    "id": "3771c026-7266-4659-b2c4-4811e236b19d",
+                    "display_text": "Call workflow",
+                    "raw_input": "[{\"Key\":\"REF_FILE\",\"Value\":\"flow_0\"}]",
+                    "comment": "recover Threads after flow_3"
+                  }
+                ],
+                "expanded": true,
+                "continue_on_error": false,
+                "id": "b11303dd-9534-41f8-a449-7d6bfb4d1924",
+                "display_text": "If",
+                "raw_input": "[{\"Key\":\"CONDITION\",\"Value\":\"$flowRunStatus != \\\"OK\\\"\"}]",
+                "comment": "recover if flow_3 failed"
+              },
+              {
+                "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                "type": 3,
+                "element_xpath": null,
+                "output_variable_name": "remainingFlow3",
+                "delay": "0,0",
+                "continue_on_error": false,
+                "id": "7db3b7c8-83f7-448a-9968-c3e0bae3db14",
+                "display_text": null,
+                "raw_input": "[{\"Key\":\"CURRENT_VAL\",\"Value\":\"$remainingFlow3\"},{\"Key\":\"DESCREASE_BY\",\"Value\":\"1\"}]",
+                "comment": "decrease flow_3 quota"
+              }
+            ],
+            "expanded": true,
+            "continue_on_error": false,
+            "id": "80355a58-2b03-4ed7-a4c4-b22ce1ca844f",
+            "display_text": "Else",
+            "raw_input": null,
+            "comment": "choose flow_3"
+          }
+        ],
+        "expanded": false,
+        "continue_on_error": false,
+        "id": "0685ecec-ceb2-4b26-b09a-987e393b04f7",
+        "display_text": "For",
+        "raw_input": "[{\"Key\":\"START\",\"Value\":\"0\"},{\"Key\":\"END\",\"Value\":\"$totalFlows\"},{\"Key\":\"INCREASE_BY\",\"Value\":\"1\"}]",
+        "comment": "pick workflow from remaining quota"
+      },
+      {
+        "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+        "type": 7,
+        "element_xpath": null,
+        "output_variable_name": null,
+        "delay": "0,0",
+        "continue_on_error": false,
+        "id": "e1c03dca-a3c8-43e0-a3a6-52c9e4c85bd9",
+        "display_text": null,
+        "raw_input": "[{\"Key\":\"MIN\",\"Value\":\"30000\"},{\"Key\":\"MAX\",\"Value\":\"30000\"}]",
+        "comment": "keep browser open for 60 seconds"
       }
     ],
     "expanded": true,
     "continue_on_error": false,
-    "id": "f107110e-6303-4e93-a14e-dd00fb2c81bd",
+    "id": "67be49e6-9b92-4664-b894-25f91d5aead8",
     "display_text": null,
     "raw_input": null,
     "comment": "Main logic"

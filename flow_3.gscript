@@ -1,0 +1,630 @@
+{
+  "$type": "GPMAutomateEditor.Models.SubEditor, GPMAutomateEditor.Models",
+  "body": {
+    "$type": "GPMAutomateEditor.Models.NormalBlockNode, GPMAutomateEditor.Models",
+    "nodes": [
+      {
+        "$type": "GPMAutomateEditor.Models.NormalBlockNode, GPMAutomateEditor.Models",
+        "nodes": [],
+        "expanded": true,
+        "continue_on_error": false,
+        "id": "9866c448-769c-491f-97aa-8acb98402cb7",
+        "display_text": "Normal block",
+        "raw_input": null,
+        "comment": "GHI CHÚ FLOW 3\n- Thao tác chính: random cuộn feed, mở bài viết, xem nội dung chi tiết, cuộn xuống rồi cuộn lên trong bài, sau đó bấm mũi tên Back để về feed.\n- Sửa quãng cuộn ngẫu nhiên: Block #2 `test Threads article` → node #12 `handle article only if ready` → node #1 `scroll down random 2s` → node #1 `scroll Threads detail down`; và node #2 `scroll up random 3s` → node #1 `scroll Threads detail up` (120–300 px).\n- Cách đếm: dùng số thứ tự node/block hiển thị trong GPM Automate, tính cả block ghi chú này."
+      },
+      {
+        "$type": "GPMAutomateEditor.Models.NormalBlockNode, GPMAutomateEditor.Models",
+        "nodes": [
+          {
+            "$type": "GPMAutomateEditor.Models.ForBlockNode, GPMAutomateEditor.Models",
+            "start": "0",
+            "end": "1",
+            "step": "1",
+            "nodes": [
+              {
+                "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                "type": 57,
+                "element_xpath": null,
+                "output_variable_name": null,
+                "delay": "500,1300",
+                "continue_on_error": false,
+                "id": "20cb0920-4efe-4894-b176-4bf5c0b49385",
+                "display_text": null,
+                "raw_input": "[]",
+                "comment": "random scroll feed"
+              },
+              {
+                "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                "type": 7,
+                "element_xpath": null,
+                "output_variable_name": null,
+                "delay": "600,2600",
+                "continue_on_error": false,
+                "id": "1e84781a-0e81-401b-ae54-b25ec20a7de9",
+                "display_text": null,
+                "raw_input": "[{\"Key\":\"MIN\",\"Value\":\"2000\"},{\"Key\":\"MAX\",\"Value\":\"2000\"}]",
+                "comment": "wait feed..."
+              }
+            ],
+            "expanded": true,
+            "continue_on_error": false,
+            "id": "9ede3fca-8d26-4077-8951-93730071e1c0",
+            "display_text": "For",
+            "raw_input": "[{\"Key\":\"START\",\"Value\":\"0\"},{\"Key\":\"END\",\"Value\":\"1\"},{\"Key\":\"INCREASE_BY\",\"Value\":\"1\"}]",
+            "comment": "random scroll feed 10s"
+          },
+          {
+            "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+            "type": 68,
+            "element_xpath": null,
+            "output_variable_name": "targetStatus",
+            "delay": "800,2800",
+            "continue_on_error": false,
+            "id": "2ea6d86f-2dce-46e7-a175-d4ac048e7f86",
+            "display_text": null,
+            "raw_input": "[{\"Key\":\"FILE_OR_CODE\",\"Value\":\"function mark(){\\nfunction visible(e){var r=e.getBoundingClientRect(),s=getComputedStyle(e);return e.isConnected&&r.width>0&&r.height>0&&s.display!='none'&&s.visibility!='hidden';}\\nfunction titleOf(e){var svg=e.querySelector('svg[title]');return svg?(svg.getAttribute('title')||''):'';}\\nfunction isReply(e){return /^(Trả lời|Reply)/i.test(titleOf(e));}\\nfunction postOf(e){for(var n=e;n&&n!==document.body;n=n.parentElement){var links=n.querySelectorAll('a[href*=\\\"/post/\\\"]');if(links.length===1){return n;}}return null;}\\nvar old=document.querySelectorAll('[data-gpm-threads-post-ref],[data-gpm-threads-reply-ref],[data-gpm-threads-scroll-ref],[data-gpm-threads-back-ref]');\\nold.forEach(function(e){e.removeAttribute('data-gpm-threads-post-ref');e.removeAttribute('data-gpm-threads-reply-ref');e.removeAttribute('data-gpm-threads-scroll-ref');e.removeAttribute('data-gpm-threads-back-ref');});\\nvar replies=Array.prototype.filter.call(document.querySelectorAll('[role=\\\"button\\\"]'),function(e){return visible(e)&&isReply(e);});\\nif(!replies.length){return 'TARGET_NOT_FOUND';}\\nreplies.sort(function(a,b){var ra=a.getBoundingClientRect(),rb=b.getBoundingClientRect();return Math.abs((ra.top+ra.bottom)/2-innerHeight/2)-Math.abs((rb.top+rb.bottom)/2-innerHeight/2);});\\nvar reply=replies[0],post=postOf(reply);if(!post){return 'TARGET_NOT_FOUND';}\\nreply.scrollIntoView({block:'center'});\\nvar ref='gpm-threads-'+Date.now()+'-'+Math.random().toString(36).slice(2);\\npost.setAttribute('data-gpm-threads-post-ref',ref);reply.setAttribute('data-gpm-threads-reply-ref',ref);\\nwindow.__gpmThreadsFlow3={ref:ref,initialUrl:location.href,postRoot:post,button:reply};\\nreturn 'TARGET_READY';\\n} return mark();\"}]",
+            "comment": "mark Threads reply"
+          },
+          {
+            "$type": "GPMAutomateEditor.Models.IfBlockNode, GPMAutomateEditor.Models",
+            "condition": "$targetStatus = \"TARGET_NOT_FOUND\"",
+            "nodes": [
+              {
+                "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                "type": 68,
+                "element_xpath": null,
+                "output_variable_name": null,
+                "delay": "0,0",
+                "continue_on_error": false,
+                "id": "5d55135f-4df1-4cf1-b575-14ee797e89b8",
+                "display_text": null,
+                "raw_input": "[{\"Key\":\"FILE_OR_CODE\",\"Value\":\"window.__gpmFlowRunStatus = \\\"ERROR:FLOW_3_TARGET_NOT_FOUND\\\";\"}]",
+                "comment": "publish FLOW_3_TARGET_NOT_FOUND error"
+              },
+              {
+                "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                "type": 117,
+                "element_xpath": null,
+                "output_variable_name": null,
+                "delay": "0,0",
+                "continue_on_error": false,
+                "id": "25e4e830-3911-43d7-a5aa-0cd71de7c834",
+                "display_text": null,
+                "raw_input": "[{\"Key\":\"MESSAGE\",\"Value\":\"FLOW_3_TARGET_NOT_FOUND | profile=$profileId | status=$targetStatus\"}]",
+                "comment": "throw missing target"
+              }
+            ],
+            "expanded": true,
+            "continue_on_error": false,
+            "id": "aeea22fe-d7af-430d-af27-b74f30cbcf9b",
+            "display_text": "If",
+            "raw_input": "[{\"Key\":\"CONDITION\",\"Value\":\"$targetStatus = \\\"TARGET_NOT_FOUND\\\"\"}]",
+            "comment": "throw if target missing"
+          },
+          {
+            "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+            "type": 68,
+            "element_xpath": null,
+            "output_variable_name": "postPreview",
+            "delay": "680,4000",
+            "continue_on_error": false,
+            "id": "380c047b-18cd-46c6-8f95-3f86f137d11f",
+            "display_text": null,
+            "raw_input": "[{\"Key\":\"FILE_OR_CODE\",\"Value\":\"function read(){var s=window.__gpmThreadsFlow3;if(!s||!s.postRoot){return 'POST_NOT_FOUND';}var p=s.postRoot,links=p.querySelectorAll('a[href^=\\\"/@\\\"]:not([href*=\\\"/post/\\\"])'),author='';for(var i=0;i<links.length;i++){var name=(links[i].innerText||'').trim();if(name){author=name;break;}}var text=(p.innerText||'').replace(/\\\\s+/g,' ').trim();if(!author||!text){return 'POST_NOT_FOUND';}s.postPreview=(author+' | '+text).slice(0,500);return s.postPreview;} return read();\"}]",
+            "comment": "read Threads post"
+          },
+          {
+            "$type": "GPMAutomateEditor.Models.IfBlockNode, GPMAutomateEditor.Models",
+            "condition": "$postPreview = \"POST_NOT_FOUND\"",
+            "nodes": [
+              {
+                "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                "type": 68,
+                "element_xpath": null,
+                "output_variable_name": null,
+                "delay": "0,0",
+                "continue_on_error": false,
+                "id": "2cee8a11-c6de-48cf-b8bd-ec94bdbf5d19",
+                "display_text": null,
+                "raw_input": "[{\"Key\":\"FILE_OR_CODE\",\"Value\":\"window.__gpmFlowRunStatus = \\\"ERROR:FLOW_3_POST_NOT_FOUND\\\";\"}]",
+                "comment": "publish FLOW_3_POST_NOT_FOUND error"
+              },
+              {
+                "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                "type": 117,
+                "element_xpath": null,
+                "output_variable_name": null,
+                "delay": "0,0",
+                "continue_on_error": false,
+                "id": "ca360450-00ad-4d8c-b302-5fe56665e2a5",
+                "display_text": null,
+                "raw_input": "[{\"Key\":\"MESSAGE\",\"Value\":\"FLOW_3_POST_NOT_FOUND | profile=$profileId | preview=$postPreview\"}]",
+                "comment": "throw missing post"
+              }
+            ],
+            "expanded": true,
+            "continue_on_error": false,
+            "id": "b6aa173c-2047-416a-b1d7-289465555cfd",
+            "display_text": "If",
+            "raw_input": "[{\"Key\":\"CONDITION\",\"Value\":\"$postPreview = \\\"POST_NOT_FOUND\\\"\"}]",
+            "comment": "throw if post missing"
+          },
+          {
+            "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+            "type": 68,
+            "element_xpath": null,
+            "output_variable_name": "clickStatus",
+            "delay": "790,2300",
+            "continue_on_error": false,
+            "id": "23526acf-2a6c-417d-ac2f-ce67373621c2",
+            "display_text": null,
+            "raw_input": "[{\"Key\":\"FILE_OR_CODE\",\"Value\":\"function click(){var s=window.__gpmThreadsFlow3,b=document.querySelector('[data-gpm-threads-reply-ref]');if(!s||!b||b.getAttribute('aria-disabled')=='true'){return 'TARGET_NOT_FOUND';}s.button=b;b.click();return 'COMMENT_CLICKED';} return click();\"}]",
+            "comment": "click Threads reply"
+          },
+          {
+            "$type": "GPMAutomateEditor.Models.IfBlockNode, GPMAutomateEditor.Models",
+            "condition": "$clickStatus = \"TARGET_NOT_FOUND\"",
+            "nodes": [
+              {
+                "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                "type": 68,
+                "element_xpath": null,
+                "output_variable_name": null,
+                "delay": "0,0",
+                "continue_on_error": false,
+                "id": "448a59d2-612c-4b35-ace0-f2fdde77a15d",
+                "display_text": null,
+                "raw_input": "[{\"Key\":\"FILE_OR_CODE\",\"Value\":\"window.__gpmFlowRunStatus = \\\"ERROR:FLOW_3_TARGET_NOT_FOUND\\\";\"}]",
+                "comment": "publish FLOW_3_TARGET_NOT_FOUND error"
+              },
+              {
+                "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                "type": 117,
+                "element_xpath": null,
+                "output_variable_name": null,
+                "delay": "0,0",
+                "continue_on_error": false,
+                "id": "41849572-564e-4d57-847c-f1e257b5ee3c",
+                "display_text": null,
+                "raw_input": "[{\"Key\":\"MESSAGE\",\"Value\":\"FLOW_3_TARGET_NOT_FOUND | profile=$profileId | click=$clickStatus\"}]",
+                "comment": "throw lost target"
+              }
+            ],
+            "expanded": true,
+            "continue_on_error": false,
+            "id": "1a056ca7-dd19-49f5-9297-070aa3f66d0a",
+            "display_text": "If",
+            "raw_input": "[{\"Key\":\"CONDITION\",\"Value\":\"$clickStatus = \\\"TARGET_NOT_FOUND\\\"\"}]",
+            "comment": "throw if click target lost"
+          },
+          {
+            "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+            "type": 7,
+            "element_xpath": null,
+            "output_variable_name": null,
+            "delay": "750,2500",
+            "continue_on_error": false,
+            "id": "cf1c5159-840e-4f79-be86-7f7f8f126f2e",
+            "display_text": null,
+            "raw_input": "[{\"Key\":\"MIN\",\"Value\":\"4000\"},{\"Key\":\"MAX\",\"Value\":\"7000\"}]",
+            "comment": "wait article..."
+          },
+          {
+            "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+            "type": 68,
+            "element_xpath": null,
+            "output_variable_name": "articleStatus",
+            "delay": "1000,2000",
+            "continue_on_error": false,
+            "id": "6c17088d-0165-493b-a441-333a112b3444",
+            "display_text": null,
+            "raw_input": "[{\"Key\":\"FILE_OR_CODE\",\"Value\":\"function inspect(){function visible(e){var r=e.getBoundingClientRect(),s=getComputedStyle(e);return e.isConnected&&r.width>0&&r.height>0&&s.display!='none'&&s.visibility!='hidden';}var s=window.__gpmThreadsFlow3;if(!s){return 'INLINE_CONTEXT_MISSING';}var icon=document.querySelector('svg[aria-label=\\\"Quay lại\\\"],svg[aria-label=\\\"Back\\\"]'),back=icon?icon.closest('[role=\\\"button\\\"],button'):null,scroll=document.scrollingElement;if(!back||!visible(back)){return 'CLOSE_NOT_FOUND';}if(!scroll){return 'SCROLL_NOT_FOUND';}var ref=s.ref;scroll.setAttribute('data-gpm-threads-scroll-ref',ref);back.setAttribute('data-gpm-threads-back-ref',ref);s.root=document.body;s.scroll=scroll;s.back=back;s.detailUrl=location.href;return 'ARTICLE_READY';} return inspect();\"}]",
+            "comment": "inspect Threads detail"
+          },
+          {
+            "$type": "GPMAutomateEditor.Models.IfBlockNode, GPMAutomateEditor.Models",
+            "condition": "$articleStatus = \"SCROLL_NOT_FOUND\" || $articleStatus = \"CLOSE_NOT_FOUND\" || $articleStatus = \"INLINE_CONTEXT_MISSING\"",
+            "nodes": [
+              {
+                "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                "type": 68,
+                "element_xpath": null,
+                "output_variable_name": null,
+                "delay": "0,0",
+                "continue_on_error": false,
+                "id": "e24d7a44-6782-45f9-b694-a8573279c2b1",
+                "display_text": null,
+                "raw_input": "[{\"Key\":\"FILE_OR_CODE\",\"Value\":\"window.__gpmFlowRunStatus = \\\"ERROR:FLOW_3_ARTICLE_SETUP_FAILURE\\\";\"}]",
+                "comment": "publish FLOW_3_ARTICLE_SETUP_FAILURE error"
+              },
+              {
+                "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                "type": 117,
+                "element_xpath": null,
+                "output_variable_name": null,
+                "delay": "0,0",
+                "continue_on_error": false,
+                "id": "449eac0f-2b5b-46ec-ab85-740f4278d374",
+                "display_text": null,
+                "raw_input": "[{\"Key\":\"MESSAGE\",\"Value\":\"FLOW_3_ARTICLE_SETUP_FAILURE | profile=$profileId | status=$articleStatus\"}]",
+                "comment": "throw article setup failure"
+              }
+            ],
+            "expanded": true,
+            "continue_on_error": false,
+            "id": "f50a5778-ad6a-45a6-a94d-706553bfd56e",
+            "display_text": "If",
+            "raw_input": "[{\"Key\":\"CONDITION\",\"Value\":\"$articleStatus = \\\"SCROLL_NOT_FOUND\\\" || $articleStatus = \\\"CLOSE_NOT_FOUND\\\" || $articleStatus = \\\"INLINE_CONTEXT_MISSING\\\"\"}]",
+            "comment": "throw article setup errors"
+          },
+          {
+            "$type": "GPMAutomateEditor.Models.IfBlockNode, GPMAutomateEditor.Models",
+            "condition": "$articleStatus = \"INLINE_NO_PANEL\"",
+            "nodes": [
+              {
+                "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                "type": 68,
+                "element_xpath": null,
+                "output_variable_name": "inlineStatus",
+                "delay": "400,1200",
+                "continue_on_error": false,
+                "id": "27b4ed9a-651e-4c5e-8c6e-78cf76c0c8d7",
+                "display_text": null,
+                "raw_input": "[{\"Key\":\"FILE_OR_CODE\",\"Value\":\"function verifyInline(){var s=window.__gpmThreadsFlow3;if(!s){return 'INLINE_CONTEXT_MISSING';}var icon=document.querySelector('svg[aria-label=\\\"Quay lại\\\"],svg[aria-label=\\\"Back\\\"]');return icon?'PANEL_STILL_OPEN':'INLINE_CLEAN';} return verifyInline();\"}]",
+                "comment": "verify Threads return"
+              },
+              {
+                "$type": "GPMAutomateEditor.Models.IfBlockNode, GPMAutomateEditor.Models",
+                "condition": "$inlineStatus != \"INLINE_CLEAN\"",
+                "nodes": [
+                  {
+                    "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                    "type": 68,
+                    "element_xpath": null,
+                    "output_variable_name": null,
+                    "delay": "0,0",
+                    "continue_on_error": false,
+                    "id": "834a2470-99f5-4527-9280-8dfd935ff75a",
+                    "display_text": null,
+                    "raw_input": "[{\"Key\":\"FILE_OR_CODE\",\"Value\":\"window.__gpmFlowRunStatus = \\\"ERROR:FLOW_3_INLINE_PANEL_STILL_OPEN\\\";\"}]",
+                    "comment": "publish FLOW_3_INLINE_PANEL_STILL_OPEN error"
+                  },
+                  {
+                    "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                    "type": 117,
+                    "element_xpath": null,
+                    "output_variable_name": null,
+                    "delay": "0,0",
+                    "continue_on_error": false,
+                    "id": "ccac8f2d-e4de-4cf1-bd27-c4bc3fa0cc5f",
+                    "display_text": null,
+                    "raw_input": "[{\"Key\":\"MESSAGE\",\"Value\":\"FLOW_3_INLINE_PANEL_STILL_OPEN | profile=$profileId | status=$inlineStatus\"}]",
+                    "comment": "throw inline panel still open"
+                  }
+                ],
+                "expanded": true,
+                "continue_on_error": false,
+                "id": "61d28a5b-e5a8-4f38-a6bf-8465bdc67e0d",
+                "display_text": "If",
+                "raw_input": "[{\"Key\":\"CONDITION\",\"Value\":\"$inlineStatus != \\\"INLINE_CLEAN\\\"\"}]",
+                "comment": "throw if inline panel remains open"
+              }
+            ],
+            "expanded": true,
+            "continue_on_error": false,
+            "id": "01ad0ceb-47cd-4823-b1f0-ad23238be2ae",
+            "display_text": "If",
+            "raw_input": "[{\"Key\":\"CONDITION\",\"Value\":\"$articleStatus = \\\"INLINE_NO_PANEL\\\"\"}]",
+            "comment": "verify inline state before success"
+          },
+          {
+            "$type": "GPMAutomateEditor.Models.IfBlockNode, GPMAutomateEditor.Models",
+            "condition": "$articleStatus = \"ARTICLE_READY\"",
+            "nodes": [
+              {
+                "$type": "GPMAutomateEditor.Models.ForBlockNode, GPMAutomateEditor.Models",
+                "start": "0",
+                "end": "4",
+                "step": "1",
+                "nodes": [
+                  {
+                    "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                    "type": 68,
+                    "element_xpath": null,
+                    "output_variable_name": "scrollDownStatus",
+                    "delay": "130,2300",
+                    "continue_on_error": false,
+                    "id": "040f5884-cfdd-4205-8b66-ced929027d1c",
+                    "display_text": null,
+                    "raw_input": "[{\"Key\":\"FILE_OR_CODE\",\"Value\":\"function scrollDown(){var s=window.__gpmThreadsFlow3,t=document.querySelector('[data-gpm-threads-scroll-ref]');if(!s||!t){return 'SCROLL_NOT_FOUND';}var before=t.scrollTop,amount=120+Math.floor(Math.random()*181);t.scrollBy(0,amount);s.lastScroll={direction:'down',amount:amount,before:before,after:t.scrollTop};return t.scrollTop!=before?'SCROLL_DOWN_MOVED':'SCROLL_UNCHANGED';} return scrollDown();\"}]",
+                    "comment": "scroll Threads detail down"
+                  },
+                  {
+                    "$type": "GPMAutomateEditor.Models.IfBlockNode, GPMAutomateEditor.Models",
+                    "condition": "$scrollDownStatus = \"SCROLL_NOT_FOUND\"",
+                    "nodes": [
+                      {
+                        "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                        "type": 68,
+                        "element_xpath": null,
+                        "output_variable_name": null,
+                        "delay": "0,0",
+                        "continue_on_error": false,
+                        "id": "b9c2d3e6-a076-494a-b1de-0c8f70ea9a88",
+                        "display_text": null,
+                        "raw_input": "[{\"Key\":\"FILE_OR_CODE\",\"Value\":\"window.__gpmFlowRunStatus = \\\"ERROR:FLOW_3_SCROLL_DOWN_FAILURE\\\";\"}]",
+                        "comment": "publish FLOW_3_SCROLL_DOWN_FAILURE error"
+                      },
+                      {
+                        "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                        "type": 117,
+                        "element_xpath": null,
+                        "output_variable_name": null,
+                        "delay": "0,0",
+                        "continue_on_error": false,
+                        "id": "e6abfae0-e5ff-46fc-83c5-a371debec0a2",
+                        "display_text": null,
+                        "raw_input": "[{\"Key\":\"MESSAGE\",\"Value\":\"FLOW_3_SCROLL_DOWN_FAILURE | profile=$profileId | status=$scrollDownStatus\"}]",
+                        "comment": "throw missing article scroll"
+                      }
+                    ],
+                    "expanded": true,
+                    "continue_on_error": false,
+                    "id": "4207af0e-faa6-479b-8a4a-be8f5072461e",
+                    "display_text": "If",
+                    "raw_input": "[{\"Key\":\"CONDITION\",\"Value\":\"$scrollDownStatus = \\\"SCROLL_NOT_FOUND\\\"\"}]",
+                    "comment": "throw if article scroll lost"
+                  },
+                  {
+                    "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                    "type": 7,
+                    "element_xpath": null,
+                    "output_variable_name": null,
+                    "delay": "900,1900",
+                    "continue_on_error": false,
+                    "id": "ab424734-eb95-42ff-98d4-69c805a5cbee",
+                    "display_text": null,
+                    "raw_input": "[{\"Key\":\"MIN\",\"Value\":\"1000\"},{\"Key\":\"MAX\",\"Value\":\"1000\"}]",
+                    "comment": "wait scroll..."
+                  }
+                ],
+                "expanded": true,
+                "continue_on_error": false,
+                "id": "669ccac6-623a-4f56-bbff-0f21022096f6",
+                "display_text": "For",
+                "raw_input": "[{\"Key\":\"START\",\"Value\":\"0\"},{\"Key\":\"END\",\"Value\":\"4\"},{\"Key\":\"INCREASE_BY\",\"Value\":\"1\"}]",
+                "comment": "scroll down random 2s"
+              },
+              {
+                "$type": "GPMAutomateEditor.Models.ForBlockNode, GPMAutomateEditor.Models",
+                "start": "0",
+                "end": "3",
+                "step": "1",
+                "nodes": [
+                  {
+                    "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                    "type": 68,
+                    "element_xpath": null,
+                    "output_variable_name": "scrollUpStatus",
+                    "delay": "1100,2200",
+                    "continue_on_error": false,
+                    "id": "95b70c9b-9d41-4fe3-9e77-8525d92af9b1",
+                    "display_text": null,
+                    "raw_input": "[{\"Key\":\"FILE_OR_CODE\",\"Value\":\"function scrollUp(){var s=window.__gpmThreadsFlow3,t=document.querySelector('[data-gpm-threads-scroll-ref]');if(!s||!t){return 'SCROLL_NOT_FOUND';}var before=t.scrollTop,amount=120+Math.floor(Math.random()*181);t.scrollBy(0,-amount);s.lastScroll={direction:'up',amount:amount,before:before,after:t.scrollTop};return t.scrollTop!=before?'SCROLL_UP_MOVED':'SCROLL_UNCHANGED';} return scrollUp();\"}]",
+                    "comment": "scroll Threads detail up"
+                  },
+                  {
+                    "$type": "GPMAutomateEditor.Models.IfBlockNode, GPMAutomateEditor.Models",
+                    "condition": "$scrollUpStatus = \"SCROLL_NOT_FOUND\"",
+                    "nodes": [
+                      {
+                        "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                        "type": 68,
+                        "element_xpath": null,
+                        "output_variable_name": null,
+                        "delay": "0,0",
+                        "continue_on_error": false,
+                        "id": "cfad0892-d36a-4274-a61a-7ff1d93c4830",
+                        "display_text": null,
+                        "raw_input": "[{\"Key\":\"FILE_OR_CODE\",\"Value\":\"window.__gpmFlowRunStatus = \\\"ERROR:FLOW_3_SCROLL_UP_FAILURE\\\";\"}]",
+                        "comment": "publish FLOW_3_SCROLL_UP_FAILURE error"
+                      },
+                      {
+                        "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                        "type": 117,
+                        "element_xpath": null,
+                        "output_variable_name": null,
+                        "delay": "0,0",
+                        "continue_on_error": false,
+                        "id": "afbdf5ec-20fe-4a60-a365-d570087ae5ca",
+                        "display_text": null,
+                        "raw_input": "[{\"Key\":\"MESSAGE\",\"Value\":\"FLOW_3_SCROLL_UP_FAILURE | profile=$profileId | status=$scrollUpStatus\"}]",
+                        "comment": "throw missing article scroll"
+                      }
+                    ],
+                    "expanded": true,
+                    "continue_on_error": false,
+                    "id": "590844df-8676-4431-a126-ce20ebfb13fa",
+                    "display_text": "If",
+                    "raw_input": "[{\"Key\":\"CONDITION\",\"Value\":\"$scrollUpStatus = \\\"SCROLL_NOT_FOUND\\\"\"}]",
+                    "comment": "throw if article scroll lost"
+                  },
+                  {
+                    "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                    "type": 7,
+                    "element_xpath": null,
+                    "output_variable_name": null,
+                    "delay": "700,2700",
+                    "continue_on_error": false,
+                    "id": "b7a8ab07-9043-4928-91e7-a67477177d4a",
+                    "display_text": null,
+                    "raw_input": "[{\"Key\":\"MIN\",\"Value\":\"1000\"},{\"Key\":\"MAX\",\"Value\":\"1000\"}]",
+                    "comment": "wait scroll..."
+                  }
+                ],
+                "expanded": true,
+                "continue_on_error": false,
+                "id": "487bb519-2fa4-4e11-9c7e-e8b42e06cae6",
+                "display_text": "For",
+                "raw_input": "[{\"Key\":\"START\",\"Value\":\"0\"},{\"Key\":\"END\",\"Value\":\"3\"},{\"Key\":\"INCREASE_BY\",\"Value\":\"1\"}]",
+                "comment": "scroll up random 3s"
+              },
+              {
+                "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                "type": 68,
+                "element_xpath": null,
+                "output_variable_name": "closeStatus",
+                "delay": "860,3600",
+                "continue_on_error": false,
+                "id": "e33b0a70-8cfa-4c50-ae8d-d015bceed010",
+                "display_text": null,
+                "raw_input": "[{\"Key\":\"FILE_OR_CODE\",\"Value\":\"function back(){var s=window.__gpmThreadsFlow3,b=document.querySelector('[data-gpm-threads-back-ref]');if(!s||!b){return 'CLOSE_NOT_FOUND';}s.back=b;b.click();return 'BACK_CLICKED';} return back();\"}]",
+                "comment": "click Threads back"
+              },
+              {
+                "$type": "GPMAutomateEditor.Models.IfBlockNode, GPMAutomateEditor.Models",
+                "condition": "$closeStatus = \"CLOSE_NOT_FOUND\"",
+                "nodes": [
+                  {
+                    "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                    "type": 68,
+                    "element_xpath": null,
+                    "output_variable_name": null,
+                    "delay": "0,0",
+                    "continue_on_error": false,
+                    "id": "2bef735e-9d63-4378-b42a-cb94ae394910",
+                    "display_text": null,
+                    "raw_input": "[{\"Key\":\"FILE_OR_CODE\",\"Value\":\"window.__gpmFlowRunStatus = \\\"ERROR:FLOW_3_CLOSE_FAILURE\\\";\"}]",
+                    "comment": "publish FLOW_3_CLOSE_FAILURE error"
+                  },
+                  {
+                    "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                    "type": 117,
+                    "element_xpath": null,
+                    "output_variable_name": null,
+                    "delay": "0,0",
+                    "continue_on_error": false,
+                    "id": "3e412a83-8714-40ab-ba35-6d774b95411d",
+                    "display_text": null,
+                    "raw_input": "[{\"Key\":\"MESSAGE\",\"Value\":\"FLOW_3_CLOSE_FAILURE | profile=$profileId | status=$closeStatus\"}]",
+                    "comment": "throw missing article close"
+                  }
+                ],
+                "expanded": true,
+                "continue_on_error": false,
+                "id": "e130ad7a-9dbc-4652-afb7-e81e4d485ff6",
+                "display_text": "If",
+                "raw_input": "[{\"Key\":\"CONDITION\",\"Value\":\"$closeStatus = \\\"CLOSE_NOT_FOUND\\\"\"}]",
+                "comment": "throw if article close lost"
+              },
+              {
+                "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                "type": 7,
+                "element_xpath": null,
+                "output_variable_name": null,
+                "delay": "770,1770",
+                "continue_on_error": false,
+                "id": "e73838cc-068c-490b-8924-773856be95f4",
+                "display_text": null,
+                "raw_input": "[{\"Key\":\"MIN\",\"Value\":\"500\"},{\"Key\":\"MAX\",\"Value\":\"1000\"}]",
+                "comment": "wait close..."
+              },
+              {
+                "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                "type": 68,
+                "element_xpath": null,
+                "output_variable_name": "closeVerify",
+                "delay": "300,3000",
+                "continue_on_error": false,
+                "id": "41e0737a-c052-4a15-86f8-75479f094ee3",
+                "display_text": null,
+                "raw_input": "[{\"Key\":\"FILE_OR_CODE\",\"Value\":\"function verify(){var s=window.__gpmThreadsFlow3;if(!s){return 'PANEL_STILL_OPEN';}var icon=document.querySelector('svg[aria-label=\\\"Quay lại\\\"],svg[aria-label=\\\"Back\\\"]');return (!icon||location.href!==s.detailUrl)?'PANEL_CLOSED':'PANEL_STILL_OPEN';} return verify();\"}]",
+                "comment": "verify Threads back"
+              },
+              {
+                "$type": "GPMAutomateEditor.Models.IfBlockNode, GPMAutomateEditor.Models",
+                "condition": "$closeVerify = \"PANEL_STILL_OPEN\"",
+                "nodes": [
+                  {
+                    "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                    "type": 68,
+                    "element_xpath": null,
+                    "output_variable_name": null,
+                    "delay": "0,0",
+                    "continue_on_error": false,
+                    "id": "09e5511e-6af8-4613-8b37-ab8a508522b4",
+                    "display_text": null,
+                    "raw_input": "[{\"Key\":\"FILE_OR_CODE\",\"Value\":\"window.__gpmFlowRunStatus = \\\"ERROR:FLOW_3_PANEL_STILL_OPEN\\\";\"}]",
+                    "comment": "publish FLOW_3_PANEL_STILL_OPEN error"
+                  },
+                  {
+                    "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+                    "type": 117,
+                    "element_xpath": null,
+                    "output_variable_name": null,
+                    "delay": "0,0",
+                    "continue_on_error": false,
+                    "id": "de899b6b-f7cb-4859-82c8-48e6a5a68df6",
+                    "display_text": null,
+                    "raw_input": "[{\"Key\":\"MESSAGE\",\"Value\":\"FLOW_3_PANEL_STILL_OPEN | profile=$profileId | status=$closeVerify\"}]",
+                    "comment": "throw panel still open"
+                  }
+                ],
+                "expanded": true,
+                "continue_on_error": false,
+                "id": "f7cd8534-f58d-4254-a7b6-c5843ede9f52",
+                "display_text": "If",
+                "raw_input": "[{\"Key\":\"CONDITION\",\"Value\":\"$closeVerify = \\\"PANEL_STILL_OPEN\\\"\"}]",
+                "comment": "throw if article remains open"
+              }
+            ],
+            "expanded": true,
+            "continue_on_error": false,
+            "id": "25f62e8c-e658-430c-a9d0-2d970dbfbd0f",
+            "display_text": "If",
+            "raw_input": "[{\"Key\":\"CONDITION\",\"Value\":\"$articleStatus = \\\"ARTICLE_READY\\\"\"}]",
+            "comment": "handle article only if ready"
+          }
+        ],
+        "expanded": true,
+        "continue_on_error": false,
+        "id": "83d27ffa-3d69-47dd-a762-b0a64228aee4",
+        "display_text": "Normal block",
+        "raw_input": null,
+        "comment": "test comment article"
+      },
+      {
+        "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+        "type": 1,
+        "element_xpath": null,
+        "output_variable_name": "flowRunStatus",
+        "delay": "0,0",
+        "continue_on_error": false,
+        "id": "34e368a1-413f-45a8-8dd0-af2949270080",
+        "display_text": null,
+        "raw_input": "[{\"Key\":\"VALUE\",\"Value\":\"OK\"},{\"Key\":\"ALLOW_USER_INPUT\",\"Value\":\"False\"},{\"Key\":\"USER_INPUT_TYPE\",\"Value\":\"Text\"},{\"Key\":\"COMBOBOX_DATA\",\"Value\":\"\"},{\"Key\":\"INPUT_REQUIRED\",\"Value\":\"False\"}]",
+        "comment": "mark flow_3 success"
+      },
+      {
+        "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+        "type": 68,
+        "element_xpath": null,
+        "output_variable_name": null,
+        "delay": "0,0",
+        "continue_on_error": false,
+        "id": "ba1293c4-6685-4402-b0b3-c4506754af71",
+        "display_text": null,
+        "raw_input": "[{\"Key\":\"FILE_OR_CODE\",\"Value\":\"window.__gpmFlowRunStatus = \\\"OK\\\";\"}]",
+        "comment": "publish flow_3 success"
+      }
+    ],
+    "expanded": true,
+    "continue_on_error": false,
+    "id": "fc347c67-50de-4eee-a1ae-0a47b16d78e3",
+    "display_text": null,
+    "raw_input": null,
+    "comment": null
+  },
+  "name": "Main"
+}
