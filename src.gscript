@@ -12,8 +12,21 @@
   },
   "main_logic": {
     "$type": "GPMAutomateEditor.Models.NormalBlockNode, GPMAutomateEditor.Models",
-    "nodes": [],
-    "expanded": false,
+    "nodes": [
+      {
+        "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+        "type": 70,
+        "element_xpath": null,
+        "output_variable_name": null,
+        "delay": "0,0",
+        "continue_on_error": false,
+        "id": "049d53bb-fca7-4383-b699-20a53561b42e",
+        "display_text": "Call workflow",
+        "raw_input": "[{\"Key\":\"REF_FILE\",\"Value\":\"flow_0\"}]",
+        "comment": null
+      }
+    ],
+    "expanded": true,
     "continue_on_error": false,
     "id": "f107110e-6303-4e93-a14e-dd00fb2c81bd",
     "display_text": null,

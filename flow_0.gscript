@@ -1,0 +1,50 @@
+{
+  "$type": "GPMAutomateEditor.Models.SubEditor, GPMAutomateEditor.Models",
+  "body": {
+    "$type": "GPMAutomateEditor.Models.NormalBlockNode, GPMAutomateEditor.Models",
+    "nodes": [
+      {
+        "$type": "GPMAutomateEditor.Models.NormalBlockNode, GPMAutomateEditor.Models",
+        "nodes": [
+          {
+            "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+            "type": 39,
+            "element_xpath": null,
+            "output_variable_name": null,
+            "delay": "1000,1500",
+            "continue_on_error": false,
+            "id": "a2478e57-4a1b-41ba-9dba-67d35984a60f",
+            "display_text": null,
+            "raw_input": "[{\"Key\":\"URL\",\"Value\":\"https://www.threads.com/\"},{\"Key\":\"TIME_OUT\",\"Value\":\"30\"}]",
+            "comment": "go to Threads"
+          },
+          {
+            "$type": "GPMAutomateEditor.Models.ActionNode, GPMAutomateEditor.Models",
+            "type": 44,
+            "element_xpath": "//a[@href='/search' and @role='link' and .//*[@aria-label='Tìm kiếm']]",
+            "output_variable_name": null,
+            "delay": "1000,1500",
+            "continue_on_error": false,
+            "id": "ea551589-4431-4252-bb91-a41dedc837da",
+            "display_text": null,
+            "raw_input": "[{\"Key\":\"TIME_OUT\",\"Value\":\"30\"}]",
+            "comment": "wait Threads search"
+          }
+        ],
+        "expanded": true,
+        "continue_on_error": false,
+        "id": "cd0ee7ca-51c3-4ca9-b27b-c2bec4d3aadb",
+        "display_text": "Normal block",
+        "raw_input": null,
+        "comment": "Mở trang Threads"
+      }
+    ],
+    "expanded": true,
+    "continue_on_error": false,
+    "id": "f2bb5e89-c5f4-44d4-92ef-0756467e9423",
+    "display_text": null,
+    "raw_input": null,
+    "comment": null
+  },
+  "name": "Main"
+}
