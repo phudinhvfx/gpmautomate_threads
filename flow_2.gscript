@@ -149,7 +149,7 @@
           },
           {
             "$type": "GPMAutomateEditor.Models.IfBlockNode, GPMAutomateEditor.Models",
-            "condition": "$sendComment = \"True\" && $commentRandom >= 1 && $commentRandom <= 9",
+            "condition": "$sendComment = \"True\" && $commentRandom >= 2 && $commentRandom <= 3",
             "nodes": [
               {
                 "$type": "GPMAutomateEditor.Models.NormalBlockNode, GPMAutomateEditor.Models",
@@ -933,8 +933,8 @@
             "continue_on_error": false,
             "id": "20760aa7-b192-42fe-a95a-44105094413f",
             "display_text": "If",
-            "raw_input": "[{\"Key\":\"CONDITION\",\"Value\":\"$sendComment = \\\"True\\\" && $commentRandom >= 1 && $commentRandom <= 9\"}]",
-            "comment": "comment when random is 3 to 5 for debug"
+            "raw_input": "[{\"Key\":\"CONDITION\",\"Value\":\"$sendComment = \\\"True\\\" && $commentRandom >= 2 && $commentRandom <= 3\"}]",
+            "comment": "comment when random is 2 to 3 for debug"
           },
           {
             "$type": "GPMAutomateEditor.Models.ElseBlockNode, GPMAutomateEditor.Models",

@@ -149,7 +149,7 @@
           },
           {
             "$type": "GPMAutomateEditor.Models.IfBlockNode, GPMAutomateEditor.Models",
-            "condition": "$likeRandom >= 1 && $likeRandom <= 9",
+            "condition": "$likeRandom >= 1 && $likeRandom <= 2",
             "nodes": [
               {
                 "$type": "GPMAutomateEditor.Models.NormalBlockNode, GPMAutomateEditor.Models",
@@ -227,8 +227,8 @@
             "continue_on_error": false,
             "id": "0152192a-6300-440f-81d0-3d14862eeb85",
             "display_text": "If",
-            "raw_input": "[{\"Key\":\"CONDITION\",\"Value\":\"$likeRandom >= 1 && $likeRandom <= 9\"}]",
-            "comment": "like when random is 4 to 6"
+            "raw_input": "[{\"Key\":\"CONDITION\",\"Value\":\"$likeRandom >= 1 && $likeRandom <= 2\"}]",
+            "comment": "like when random is 1 to 2"
           },
           {
             "$type": "GPMAutomateEditor.Models.ElseBlockNode, GPMAutomateEditor.Models",
